@@ -32,7 +32,7 @@ function generatePolicyDocument(principalId, effect, resource) {
  * Handle requests from API Gateway
  * "event" is an object with an "authorizationToken"
  */
-exports.handler = (event, context, callback) {
+exports.handler = (event, context, callback) => {
 	var token = event.authorizationToken.split(' ');
 	if(token[0] === 'Bearer'){
 		// Token-based re-authorization
