@@ -34,7 +34,6 @@ function generatePolicyDocument(principalId, effect, resource) {
  */
 exports.handler = (event, context, callback) => {
 	var token = event.authorizationToken.split(' ');
-	if(token[0] === 'Bearer'){
 		// Token-based re-authorization
 		// Verify
 		jwt.verify(token[1], cert, {algorithms: ['RS256']}, function(err, data){
@@ -49,9 +48,4 @@ exports.handler = (event, context, callback) => {
 			}
 			callback('Unauthorized');
 		});
-	} else {
-		// Require a "Bearer" token
-		console.log('Wrong token type', token[0]);
-		callback('Unauthorized');
-	}
 };
