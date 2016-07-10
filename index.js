@@ -37,7 +37,7 @@ exports.handler = (event, context, callback) => {
 	if(token[0] === 'Bearer'){
 		// Token-based re-authorization
 		// Verify
-		jwt.verify(token[1], cert, function(err, data){
+		jwt.verify(token[1], cert, {algorithms: ['HS256']}, function(err, data){
 			if(err){
 				console.log('Verification Failure', err);
 			} else if (data && data.id){
