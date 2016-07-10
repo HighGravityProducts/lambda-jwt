@@ -4,7 +4,7 @@
   "description": "API Gateway Lambda function to support JSON Web Tokens",
   "main": "index.js",
   "scripts": {
-	"package-prod": "git clean -dfq && npm install --production && zip -r lambda-jwt.zip node_modules/ *.js"
+	"package-prod": "git clean -dfq && npm install --production && zip -r lambda-jwt.zip node_modules/ *.js *.pem"
   },
   "repository": {
     "type": "git",
