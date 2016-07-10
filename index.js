@@ -32,7 +32,7 @@ function generatePolicyDocument(principalId, effect, resource) {
  * Handle requests from API Gateway
  * "event" is an object with an "authorizationToken"
  */
-exports.handler = function jwtHandler(event, context){
+exports.handler = (event, context, callback) {
 	var token = event.authorizationToken.split(' ');
 	if(token[0] === 'Bearer'){
 		// Token-based re-authorization
@@ -40,18 +40,18 @@ exports.handler = function jwtHandler(event, context){
 		jwt.verify(token[1], cert, function(err, data){
 			if(err){
 				console.log('Verification Failure', err);
-				context.fail('Unauthorized');
 			} else if (data && data.id){
 				console.log('LOGIN', data);
-				context.succeed(generatePolicyDocument(data.id, 'Allow', event.methodArn));
+				callback(null, generatePolicyDocument(data.id, 'Allow', event.methodArn));
+				return;
 			} else {
 				console.log('Invalid User', data);
-				context.fail('Unauthorized');
 			}
+			callback('Unauthorized');
 		});
 	} else {
 		// Require a "Bearer" token
 		console.log('Wrong token type', token[0]);
-		context.fail('Unauthorized');
+		callback('Unauthorized');
 	}
 };
